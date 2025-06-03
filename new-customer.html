@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Customer - Nexnora Banking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #42a5f5;
+        }
+
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(66, 165, 245, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .required-field::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="admin-dashboard.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="form-container">
+            <h2 class="form-title">Add New Customer</h2>
+            
+            <form id="newCustomerForm" onsubmit="return handleSubmit(event)">
+                <div class="row">
+                    <!-- Personal Information -->
+                    <div class="col-md-6 mb-4">
+                        <h4>Personal Information</h4>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Full Name</label>
+                            <input type="text" class="form-control" id="customerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Date of Birth</label>
+                            <input type="date" class="form-control" id="dateOfBirth" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Gender</label>
+                            <select class="form-select" id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                    </div>
+
+                    <!-- Address & Identity -->
+                    <div class="col-md-6 mb-4">
+                        <h4>Address & Identity</h4>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Address Line 1</label>
+                            <input type="text" class="form-control" id="address1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address Line 2</label>
+                            <input type="text" class="form-control" id="address2">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">City</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">State</label>
+                            <input type="text" class="form-control" id="state" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">PIN Code</label>
+                            <input type="text" class="form-control" id="pin" required maxlength="6">
+                        </div>
+                    </div>
+
+                    <!-- Identity Documents -->
+                    <div class="col-12 mb-4">
+                        <h4>Identity Documents</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label required-field">ID Type</label>
+                                    <select class="form-select" id="idType" required>
+                                        <option value="">Select ID Type</option>
+                                        <option value="passport">Passport</option>
+                                        <option value="drivers_license">Driver's License</option>
+                                        <option value="national_id">National ID</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label required-field">ID Number</label>
+                                    <input type="text" class="form-control" id="idNumber" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Upload ID Document</label>
+                            <input type="file" class="form-control" id="idDocument" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-secondary me-md-2" onclick="resetForm()">Reset</button>
+                            <button type="submit" class="btn btn-primary">Add Customer</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import {
+            validateCustomerName,
+            validateAddress,
+            validateCity,
+            validateState,
+            validatePin,
+            validatePhone,
+            validateEmail,
+            generateUsername,
+            generateDefaultPassword,
+            showError,
+            clearError
+        } from './js/validation.js';
+
+        // Add input event listeners for real-time validation
+        document.getElementById('customerName').addEventListener('input', validateField);
+        document.getElementById('address1').addEventListener('input', validateField);
+        document.getElementById('city').addEventListener('input', validateField);
+        document.getElementById('state').addEventListener('input', validateField);
+        document.getElementById('pin').addEventListener('input', validateField);
+        document.getElementById('phone').addEventListener('input', validateField);
+        document.getElementById('email').addEventListener('input', validateField);
+
+        function validateField(event) {
+            const input = event.target;
+            const value = input.value;
+            let validation;
+
+            switch(input.id) {
+                case 'customerName':
+                    validation = validateCustomerName(value);
+                    break;
+                case 'address1':
+                    validation = validateAddress(value);
+                    break;
+                case 'city':
+                    validation = validateCity(value);
+                    break;
+                case 'state':
+                    validation = validateState(value);
+                    break;
+                case 'pin':
+                    validation = validatePin(value);
+                    break;
+                case 'phone':
+                    validation = validatePhone(value);
+                    break;
+                case 'email':
+                    validation = validateEmail(value);
+                    break;
+            }
+
+            if (!validation.isValid) {
+                showError(input, validation.error);
+            } else {
+                clearError(input);
+            }
+        }
+
+        window.handleSubmit = async function(event) {
+            event.preventDefault();
+            
+            // Get all form values
+            const formData = {
+                customerName: document.getElementById('customerName').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                gender: document.getElementById('gender').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address1: document.getElementById('address1').value,
+                address2: document.getElementById('address2').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                pin: document.getElementById('pin').value,
+                idType: document.getElementById('idType').value,
+                idNumber: document.getElementById('idNumber').value
+            };
+
+            // Validate all fields
+            const validations = {
+                customerName: validateCustomerName(formData.customerName),
+                address: validateAddress(formData.address1),
+                city: validateCity(formData.city),
+                state: validateState(formData.state),
+                pin: validatePin(formData.pin),
+                phone: validatePhone(formData.phone),
+                email: validateEmail(formData.email)
+            };
+
+            // Check if any validation failed
+            let hasError = false;
+            for (const [field, validation] of Object.entries(validations)) {
+                if (!validation.isValid) {
+                    showError(document.getElementById(field), validation.error);
+                    hasError = true;
+                }
+            }
+
+            if (hasError) {
+                return false;
+            }
+
+            try {
+                // Check if email already exists (F33)
+                const emailCheck = await fetch('/api/check-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: formData.email })
+                });
+                const emailData = await emailCheck.json();
+
+                if (emailData.exists) {
+                    showError(document.getElementById('email'), 'Email ID already exists in the system');
+                    return false;
+                }
+
+                // Submit the form
+                const response = await fetch('/api/new-customer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const customerId = data.customerId;
+                    
+                    // Generate login credentials
+                    const username = generateUsername(formData.customerName, customerId);
+                    const password = generateDefaultPassword(formData.customerName, formData.dateOfBirth);
+
+                    // Show success modal with login credentials
+                    showSuccessModal(username, password);
+                    resetForm();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.message);
+                }
+            } catch (error) {
+                alert('Error submitting form: ' + error.message);
+            }
+
+            return false;
+        };
+
+        function showSuccessModal(username, password) {
+            // Create modal HTML
+            const modalHtml = `
+                <div class="modal fade" id="successModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title">Registration Successful!</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle"></i> Your account has been created successfully!
+                                </div>
+                                <div class="alert alert-info">
+                                    <h6 class="mb-3">Your Login Credentials:</h6>
+                                    <p><strong>Username:</strong> ${username}</p>
+                                    <p><strong>Password:</strong> ${password}</p>
+                                </div>
+                                <p class="text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Please save these credentials securely. You will need them to login.
+                                </p>
+                            </div>
+                            <div class="modal-footer flex-column">
+                                <div class="d-flex w-100 gap-2 mb-3">
+                                    <button type="button" class="btn btn-outline-primary flex-grow-1" onclick="printCredentials('${username}', '${password}')">
+                                        <i class="fas fa-print"></i> Print Credentials
+                                    </button>
+                                    <button type="button" class="btn btn-primary flex-grow-1" onclick="proceedToLogin('${username}')">
+                                        <i class="fas fa-sign-in-alt"></i> Proceed to Login
+                                    </button>
+                                </div>
+                                <small class="text-muted">You will be redirected to the login page in <span id="countdown">10</span> seconds...</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+            // Add modal to document
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('successModal'));
+            modal.show();
+
+            // Start countdown
+            let countdown = 10;
+            const countdownElement = document.getElementById('countdown');
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    proceedToLogin(username);
+                }
+            }, 1000);
+
+            // Remove modal from DOM after it's hidden
+            document.getElementById('successModal').addEventListener('hidden.bs.modal', function() {
+                clearInterval(countdownInterval);
+                this.remove();
+            });
+        }
+
+        window.printCredentials = function(username, password) {
+            const printWindow = window.open('', '', 'width=600,height=600');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Login Credentials - Nexnora Banking</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .credentials { border: 1px solid #ccc; padding: 20px; margin: 20px 0; }
+                        .warning { color: red; }
+                    </style>
+                </head>
+                <body>
+                    <h2>Nexnora Banking - Login Credentials</h2>
+                    <div class="credentials">
+                        <p><strong>Username:</strong> ${username}</p>
+                        <p><strong>Password:</strong> ${password}</p>
+                    </div>
+                    <p class="warning">Please change your password upon first login.</p>
+                    <p>For security reasons, please keep these credentials confidential.</p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        };
+
+        window.proceedToLogin = function(username) {
+            // Store username in sessionStorage for auto-fill
+            sessionStorage.setItem('registeredUsername', username);
+            // Redirect to login page
+            window.location.href = 'login.html';
+        };
+
+        window.resetForm = function() {
+            document.getElementById('newCustomerForm').reset();
+            // Clear all error messages
+            const inputs = document.querySelectorAll('.form-control, .form-select');
+            inputs.forEach(input => clearError(input));
+        };
+    </script>
+</body>
+</html> 

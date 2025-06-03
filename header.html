@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Component</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="header.css">
+</head>
+<body>
+    <header class="header">
+        <div class="space-bg" id="spaceBg"></div>
+        <div class="header-container">
+            <a href="index.html" class="brand-name">Nexnora</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="fund-transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a></li>
+                    <li><a href="balance-enquiry.html"><i class="fas fa-wallet"></i> Balance</a></li>
+                    <li><a href="mini-statement.html"><i class="fas fa-file-alt"></i> Statement</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <img src="https://via.placeholder.com/32" alt="User" id="userAvatar">
+                <span id="userName"></span>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        // Create space background effect
+        function createStars() {
+            const spaceBg = document.getElementById('spaceBg');
+            const numberOfStars = 50;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation duration and opacity
+                const duration = 2 + Math.random() * 3;
+                const opacity = 0.5 + Math.random() * 0.5;
+
+                star.style.cssText = `
+                    left: ${x}%;
+                    top: ${y}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    --duration: ${duration}s;
+                    --opacity: ${opacity};
+                `;
+
+                spaceBg.appendChild(star);
+            }
+        }
+
+        // Update user info
+        function updateUserInfo() {
+            const userName = document.getElementById('userName');
+            const userAvatar = document.getElementById('userAvatar');
+            
+            const storedName = localStorage.getItem('userName') || sessionStorage.getItem('userName');
+            if (storedName) {
+                userName.textContent = storedName;
+            }
+
+            // You can add custom avatar logic here
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            updateUserInfo();
+        });
+    </script>
+</body>
+</html> 

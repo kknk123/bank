@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexnora Banking - Your Trusted Financial Partner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar {
+            background-color: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            background: linear-gradient(45deg, #1a237e, #0d47a1, #2196f3, #64b5f6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .banking-illustration {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .banking-icon {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .icon-1 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .icon-2 {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 0.5s;
+        }
+
+        .icon-3 {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+
+        .icon-4 {
+            width: 65px;
+            height: 65px;
+            top: 30%;
+            left: 50%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .banking-circle {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .welcome-container {
+            overflow: hidden;
+            margin-bottom: 2rem;
+            height: 80px; /* Fixed height to prevent layout shifts */
+        }
+
+        .typing-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .typing-text::after {
+            content: '|';
+            position: absolute;
+            right: -8px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-description {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .get-started-btn {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards 1s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .feature-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: white;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .features-carousel {
+            padding: 60px 0;
+            background: white;
+            position: relative;
+        }
+
+        .carousel-item {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-slide {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-slide:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon-wrapper {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            20%, 100% { transform: translateX(100%); }
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .feature-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.9;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-indicators {
+            bottom: -50px;
+        }
+
+        .carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicators button.active {
+            opacity: 1;
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* Timeline Styles */
+        .timeline-section {
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+            box-shadow: 0 0 10px rgba(26, 35, 126, 0.3);
+            animation: glowLine 2s infinite alternate;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-start;
+            padding: 40px 0;
+            width: 100%;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+        }
+
+        .timeline-img {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-img:hover {
+            transform: scale(1.1);
+        }
+
+        .timeline-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(26, 35, 126, 0.2);
+        }
+
+        .timeline-content {
+            width: calc(50% - 120px);
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 20px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) .timeline-content { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) .timeline-content { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) .timeline-content { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) .timeline-content { animation-delay: 0.8s; }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin: 0;
+        }
+
+        @keyframes glowLine {
+            from {
+                box-shadow: 0 0 5px rgba(26, 35, 126, 0.3);
+            }
+            to {
+                box-shadow: 0 0 15px rgba(26, 35, 126, 0.6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 80px;
+            }
+
+            .timeline-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 160px);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Nexnora Banking</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="banking-illustration">
+                        <div class="banking-circle circle-1"></div>
+                        <div class="banking-circle circle-2"></div>
+                        <div class="banking-icon icon-1">
+                            <i class="fas fa-university fa-2x"></i>
+                        </div>
+                        <div class="banking-icon icon-2">
+                            <i class="fas fa-mobile-alt fa-2x"></i>
+                        </div>
+                        <div class="banking-icon icon-3">
+                            <i class="fas fa-credit-card fa-2x"></i>
+                        </div>
+                        <div class="banking-icon icon-4">
+                            <i class="fas fa-shield-alt fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="welcome-container">
+                        <h1 class="display-4 fw-bold typing-text"></h1>
+                    </div>
+                    <p class="lead mb-4 hero-description">Experience secure and innovative financial solutions for your banking needs.</p>
+                    <button class="btn btn-light btn-lg me-3 get-started-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section py-5">
+        <div class="container">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-img">
+                        <img src="https://placehold.co/200x200/1a237e/ffffff?text=Mobile+Banking" alt="Mobile Banking" class="rounded-circle">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Mobile Banking</h3>
+                        <p>Experience seamless banking on your mobile device with our secure and user-friendly app.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img">
+                        <img src="https://placehold.co/200x200/1a237e/ffffff?text=Secure+Payments" alt="Secure Payments" class="rounded-circle">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Secure Payments</h3>
+                        <p>Make safe and secure transactions with advanced encryption technology.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img">
+                        <img src="https://placehold.co/200x200/1a237e/ffffff?text=Investment" alt="Investment Solutions" class="rounded-circle">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Investment Solutions</h3>
+                        <p>Grow your wealth with our diverse investment options and expert guidance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img">
+                        <img src="https://placehold.co/200x200/1a237e/ffffff?text=24/7+Support" alt="24/7 Support" class="rounded-circle">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>24/7 Support</h3>
+                        <p>Get assistance anytime with our dedicated customer support team.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Carousel Section -->
+    <section class="features-carousel">
+        <div class="container">
+            <div id="bankingFeatures" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#bankingFeatures" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#bankingFeatures" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#bankingFeatures" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#bankingFeatures" data-bs-slide-to="3"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="feature-slide">
+                                    <div class="feature-icon-wrapper">
+                                        <i class="fas fa-mobile-alt feature-icon"></i>
+                                    </div>
+                                    <h3 class="feature-title">Mobile Banking</h3>
+                                    <p class="feature-description">
+                                        Experience seamless banking on the go with our secure mobile app.
+                                        Transfer funds, pay bills, and manage your accounts anytime, anywhere.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="feature-slide">
+                                    <div class="feature-icon-wrapper">
+                                        <i class="fas fa-shield-alt feature-icon"></i>
+                                    </div>
+                                    <h3 class="feature-title">Secure Transactions</h3>
+                                    <p class="feature-description">
+                                        Your security is our top priority. Advanced encryption and multi-factor
+                                        authentication keep your transactions safe and protected.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="feature-slide">
+                                    <div class="feature-icon-wrapper">
+                                        <i class="fas fa-chart-line feature-icon"></i>
+                                    </div>
+                                    <h3 class="feature-title">Investment Solutions</h3>
+                                    <p class="feature-description">
+                                        Grow your wealth with our diverse investment options.
+                                        Expert guidance and portfolio management to help you achieve your financial goals.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="feature-slide">
+                                    <div class="feature-icon-wrapper">
+                                        <i class="fas fa-credit-card feature-icon"></i>
+                                    </div>
+                                    <h3 class="feature-title">Card Services</h3>
+                                    <p class="feature-description">
+                                        Discover our range of credit and debit cards with exclusive rewards,
+                                        cashback offers, and worldwide acceptance.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#bankingFeatures" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#bankingFeatures" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <h3 class="h5 mb-3">Online Banking</h3>
+                        <p class="text-muted">Manage your accounts, transfer funds, and pay bills anytime, anywhere.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <h3 class="h5 mb-3">Mobile Banking</h3>
+                        <p class="text-muted">Bank on the go with our secure and user-friendly mobile app.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4">
+                        <h3 class="h5 mb-3">Secure Transactions</h3>
+                        <p class="text-muted">Your security is our priority with advanced encryption technology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Nexnora Banking</h5>
+                    <p>Your trusted financial partner for a secure future.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html" class="text-white">About Us</a></li>
+                        <li><a href="services.html" class="text-white">Services</a></li>
+                        <li><a href="contact.html" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@nexnora.com<br>Phone: 1-800-NEXNORA</p>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 border-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 Nexnora Banking. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Simple Login Form -->
+                    <form id="loginForm" onsubmit="return handleLogin(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
+                            <div class="invalid-feedback">Please enter your username</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                            <div class="invalid-feedback">Please enter your password</div>
+                        </div>
+                        <div id="loginError" class="alert alert-danger d-none"></div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registrationForm" onsubmit="return handleRegistration(event)" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required 
+                                    minlength="2" maxlength="50"
+                                    pattern="[A-Za-z ]+"
+                                    title="First name must be 2-50 characters long and contain only letters">
+                                <div class="invalid-feedback">
+                                    First name must be 2-50 characters long and contain only letters
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required 
+                                    minlength="2" maxlength="50"
+                                    pattern="[A-Za-z ]+"
+                                    title="Last name must be 2-50 characters long and contain only letters">
+                                <div class="invalid-feedback">
+                                    Last name must be 2-50 characters long and contain only letters
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required 
+                                maxlength="100"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                title="Please enter a valid email address">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="regUsername" required 
+                                minlength="5" maxlength="20"
+                                pattern="[a-zA-Z0-9_-]+"
+                                title="Username must be 5-20 characters long and can contain letters, numbers, underscore and hyphen">
+                            <div class="invalid-feedback">
+                                Username must be 5-20 characters long
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="regPassword" required 
+                                minlength="8" maxlength="30"
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$"
+                                title="Password must be 8-30 characters long and include uppercase, lowercase, number and special character">
+                            <div class="invalid-feedback">
+                                Password must be 8-30 characters long and include uppercase, lowercase, number and special character
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountType" class="form-label">Account Type</label>
+                            <select class="form-select" id="accountType" required>
+                                <option value="">Select Account Type</option>
+                                <option value="savings">Savings Account</option>
+                                <option value="checking">Checking Account</option>
+                                <option value="business">Business Account</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select an account type
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Single login handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            // Get input values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            const form = document.getElementById('loginForm');
+            
+            // Reset error state
+            errorDiv.classList.add('d-none');
+            
+            // Basic validation
+            if (!username || !password) {
+                errorDiv.textContent = 'Please enter both username and password';
+                errorDiv.classList.remove('d-none');
+                return false;
+            }
+            
+            try {
+                // Check credentials
+                if (username === 'admin' && password === 'Admin@123') {
+                    // Generate a mock token
+                    const token = 'admin_' + Date.now();
+                    // Set auth data
+                    window.Auth.setAuthData(username, 'admin', token);
+                    // Redirect to admin dashboard
+                    window.location.replace('admin/admin-dashboard.html');
+                } else {
+                    errorDiv.textContent = 'Invalid credentials';
+                    errorDiv.classList.remove('d-none');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorDiv.textContent = 'An error occurred during login. Please try again.';
+                errorDiv.classList.remove('d-none');
+            }
+            
+            return false;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear any existing auth data on login page
+            Auth.clearAuthData();
+        });
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            alert('Registration successful! Please check your email to verify your account.');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            modal.hide();
+            event.target.reset();
+        }
+
+        // Typing animation
+        const welcomeText = document.querySelector('.typing-text');
+        const messages = [
+            'Welcome to Nexnora Banking',
+            'Your Trusted Financial Partner',
+            'Secure Banking Solutions',
+            'Innovation in Banking'
+        ];
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        let deletingSpeed = 50;
+        let pauseDuration = 2000;
+
+        function typeText() {
+            const currentMessage = messages[messageIndex];
+            
+            if (isDeleting) {
+                welcomeText.textContent = currentMessage.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = deletingSpeed;
+            } else {
+                welcomeText.textContent = currentMessage.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentMessage.length) {
+                // Pause at the end of typing
+                typingSpeed = pauseDuration;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                messageIndex++;
+                if (messageIndex === messages.length) {
+                    messageIndex = 0;
+                }
+            }
+
+            setTimeout(typeText, typingSpeed);
+        }
+
+        // Start the typing animation when the page loads
+        window.addEventListener('load', typeText);
+
+        // Add form validation JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to validate forms
+            function validateForm(form) {
+                let isValid = true;
+                form.classList.add('was-validated');
+
+                // Check all inputs
+                form.querySelectorAll('input, select').forEach(input => {
+                    if (!input.checkValidity()) {
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            // Update login handler
+            window.handleLogin = function(event) {
+                event.preventDefault();
+                const form = document.getElementById('loginForm');
+                
+                if (!validateForm(form)) {
+                    return false;
+                }
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const errorDiv = document.getElementById('loginError');
+
+                // Your existing login logic here
+                if (username === 'admin' && password === 'Admin@123') {
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    errorDiv.textContent = 'Invalid credentials';
+                    errorDiv.classList.remove('d-none');
+                }
+            };
+
+            // Update registration handler
+            window.handleRegistration = function(event) {
+                event.preventDefault();
+                const form = document.getElementById('registrationForm');
+                
+                if (!validateForm(form)) {
+                    return false;
+                }
+
+                // If validation passes, show success message
+                alert('Registration successful! Please check your email to verify your account.');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                modal.hide();
+                form.reset();
+                form.classList.remove('was-validated');
+            };
+        });
+    </script>
+</body>
+</html> 

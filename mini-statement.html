@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Statement - Nexnora Banking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #42a5f5;
+        }
+
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .statement-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .account-info {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .transaction-list {
+            margin-top: 20px;
+        }
+
+        .transaction-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .transaction-icon.credit {
+            background: #28a745;
+        }
+
+        .transaction-icon.debit {
+            background: #dc3545;
+        }
+
+        .transaction-details {
+            flex-grow: 1;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .transaction-amount.credit {
+            color: #28a745;
+        }
+
+        .transaction-amount.debit {
+            color: #dc3545;
+        }
+
+        .alert {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+        }
+
+        .no-transactions {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+
+        .no-transactions i {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="user-dashboard.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="statement-container">
+            <h2 class="form-title">Mini Statement</h2>
+
+            <!-- Alert Messages -->
+            <div class="alert alert-danger" id="errorAlert" role="alert">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorMessage"></span>
+            </div>
+
+            <!-- Account Information -->
+            <div class="account-info">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Account Number:</strong></p>
+                        <h5 id="accountNumber">****</h5>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-1"><strong>Available Balance:</strong></p>
+                        <h5 id="availableBalance">₹0.00</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Summary -->
+            <div class="summary-card">
+                <h5>Transaction Summary</h5>
+                <div class="summary-item">
+                    <span>Total Credits</span>
+                    <span class="text-success" id="totalCredits">₹0.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Debits</span>
+                    <span class="text-danger" id="totalDebits">₹0.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Net Change</span>
+                    <span id="netChange">₹0.00</span>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="transaction-list" id="transactionList">
+                <!-- Transactions will be populated here -->
+            </div>
+
+            <!-- Download Button -->
+            <div class="text-center download-btn">
+                <button class="btn btn-primary" onclick="downloadStatement()">
+                    <i class="fas fa-download"></i> Download Statement
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const userRole = sessionStorage.getItem('userRole') || localStorage.getItem('userRole');
+            if (!userRole) {
+                window.location.href = 'login.html';
+                return;
+            }
+            loadStatementData();
+        }
+
+        // Load statement data
+        async function loadStatementData() {
+            try {
+                const username = sessionStorage.getItem('username') || localStorage.getItem('username');
+                const response = await fetch('/api/mini-statement?username=' + username);
+                const data = await response.json();
+
+                // Update account information
+                document.getElementById('accountNumber').textContent = maskAccountNumber(data.accountNumber);
+                document.getElementById('availableBalance').textContent = formatCurrency(data.balance);
+
+                // Update summary
+                document.getElementById('totalCredits').textContent = formatCurrency(data.totalCredits);
+                document.getElementById('totalDebits').textContent = formatCurrency(data.totalDebits);
+                document.getElementById('netChange').textContent = formatCurrency(data.netChange);
+
+                // Update transaction list
+                const transactionList = document.getElementById('transactionList');
+                if (data.transactions && data.transactions.length > 0) {
+                    transactionList.innerHTML = data.transactions.map(transaction => `
+                        <div class="transaction-item">
+                            <div class="transaction-icon ${transaction.type.toLowerCase()}">
+                                <i class="fas fa-${transaction.type === 'CREDIT' ? 'arrow-down' : 'arrow-up'}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <div class="fw-bold">${transaction.description}</div>
+                                <small class="text-muted">${formatDateTime(transaction.date)}</small>
+                            </div>
+                            <div class="transaction-amount ${transaction.type.toLowerCase()}">
+                                ${transaction.type === 'CREDIT' ? '+' : '-'} ${formatCurrency(transaction.amount)}
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    transactionList.innerHTML = `
+                        <div class="no-transactions">
+                            <i class="fas fa-receipt"></i>
+                            <h5>No Recent Transactions</h5>
+                            <p>Your recent transactions will appear here</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                showError('Error loading statement data. Please try again later.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Download statement
+        function downloadStatement() {
+            try {
+                const username = sessionStorage.getItem('username') || localStorage.getItem('username');
+                const link = document.createElement('a');
+                link.href = `/api/download-statement?username=${username}`;
+                link.download = 'mini-statement.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                showError('Error downloading statement. Please try again later.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR'
+            }).format(amount);
+        }
+
+        // Mask account number
+        function maskAccountNumber(accountNumber) {
+            if (!accountNumber) return '****';
+            return '*'.repeat(accountNumber.length - 4) + accountNumber.slice(-4);
+        }
+
+        // Format date and time
+        function formatDateTime(dateString) {
+            if (!dateString) return '-';
+            return new Date(dateString).toLocaleString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Show error message
+        function showError(message) {
+            const alert = document.getElementById('errorAlert');
+            document.getElementById('errorMessage').textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 5000);
+        }
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Customer - Nexnora Banking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #42a5f5;
+        }
+
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 40px auto 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+
+        .form-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(66, 165, 245, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .required-field::after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+
+        .customer-info {
+            background: rgba(66, 165, 245, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .customer-info p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="admin-dashboard.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <h4>Search Customer</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Search by Customer ID</label>
+                        <input type="text" class="form-control" id="customerId" placeholder="Enter Customer ID">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Search by Name</label>
+                        <input type="text" class="form-control" id="customerName" placeholder="Enter Customer Name">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" onclick="searchCustomer()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="form-container" id="editForm">
+            <h2 class="form-title">Edit Customer</h2>
+            
+            <!-- Customer Info Summary -->
+            <div class="customer-info">
+                <h5>Customer Information</h5>
+                <p><strong>Customer ID:</strong> <span id="displayCustomerId">12345</span></p>
+                <p><strong>Account Created:</strong> <span id="accountCreated">January 1, 2024</span></p>
+                <p><strong>Last Updated:</strong> <span id="lastUpdated">March 15, 2024</span></p>
+            </div>
+
+            <form id="editCustomerForm" onsubmit="return handleSubmit(event)">
+                <div class="row">
+                    <!-- Personal Information -->
+                    <div class="col-md-6 mb-4">
+                        <h4>Personal Information</h4>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Full Name</label>
+                            <input type="text" class="form-control" required value="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Date of Birth</label>
+                            <input type="date" class="form-control" required value="1990-01-01">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Gender</label>
+                            <select class="form-select" required>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Email</label>
+                            <input type="email" class="form-control" required value="john.doe@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Phone Number</label>
+                            <input type="tel" class="form-control" required value="123-456-7890">
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-md-6 mb-4">
+                        <h4>Address</h4>
+                        <div class="mb-3">
+                            <label class="form-label required-field">Address Line 1</label>
+                            <input type="text" class="form-control" required value="123 Main St">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address Line 2</label>
+                            <input type="text" class="form-control" value="Apt 4B">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">City</label>
+                            <input type="text" class="form-control" required value="New York">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">State</label>
+                            <input type="text" class="form-control" required value="NY">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field">ZIP Code</label>
+                            <input type="text" class="form-control" required value="10001">
+                        </div>
+                    </div>
+
+                    <!-- Account Status -->
+                    <div class="col-12 mb-4">
+                        <h4>Account Status</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Account Status</label>
+                                    <select class="form-select">
+                                        <option value="active" selected>Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="suspended">Suspended</option>
+                                        <option value="closed">Closed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Customer Type</label>
+                                    <select class="form-select">
+                                        <option value="regular" selected>Regular</option>
+                                        <option value="premium">Premium</option>
+                                        <option value="vip">VIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-secondary me-md-2" onclick="cancelEdit()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function searchCustomer() {
+            const customerId = document.getElementById('customerId').value;
+            const customerName = document.getElementById('customerName').value;
+
+            // Here you would typically make an API call to search for the customer
+            // For demo purposes, we'll just show the form
+            document.getElementById('editForm').style.display = 'block';
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            // Here you would typically send the form data to your server
+            alert('Customer information updated successfully!');
+            return false;
+        }
+
+        function cancelEdit() {
+            document.getElementById('editForm').style.display = 'none';
+            document.getElementById('customerId').value = '';
+            document.getElementById('customerName').value = '';
+        }
+    </script>
+</body>
+</html> 
